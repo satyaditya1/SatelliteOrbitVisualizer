@@ -63,6 +63,15 @@ def build_premium_earth_visualization(xs, ys, zs, sat_name="satellite"):
     Uses WebGL for photorealistic rendering with atmosphere and lighting.
     """
     
+    # Validate input data
+    if not xs or not ys or not zs:
+        st.error("No orbit data available. Please ensure the satellite propagation generated valid coordinates.")
+        return
+    
+    if len(xs) != len(ys) or len(ys) != len(zs):
+        st.error("Coordinate arrays have mismatched lengths.")
+        return
+    
     # Convert orbit data to JSON - scale down from km to viewing units
     xs_scaled = [x / 1000.0 for x in xs]
     ys_scaled = [y / 1000.0 for y in ys]
@@ -71,6 +80,14 @@ def build_premium_earth_visualization(xs, ys, zs, sat_name="satellite"):
     xs_json = json.dumps(xs_scaled)
     ys_json = json.dumps(ys_scaled)
     zs_json = json.dumps(zs_scaled)
+    
+    # Build the orbit data script separately (not in f-string to avoid brace conflicts)
+    orbit_data_js = f"""
+            // ===== ORBIT DATA =====
+            const orbitXs = {xs_json};
+            const orbitYs = {ys_json};
+            const orbitZs = {zs_json};
+    """
     
     html_code = f"""
     <!DOCTYPE html>
@@ -310,11 +327,10 @@ def build_premium_earth_visualization(xs, ys, zs, sat_name="satellite"):
 
             const ambLight = new THREE.AmbientLight(0x505050);
             scene.add(ambLight);
-
-            // ===== ORBIT DATA =====
-            const orbitXs = {xs_json};
-            const orbitYs = {ys_json};
-            const orbitZs = {zs_json};
+"""
+    
+    # Append the orbit data (which uses different f-string to handle JSON braces)
+    html_code += orbit_data_js + f"""
             
             document.getElementById('pointCount').textContent = orbitXs.length;
 
