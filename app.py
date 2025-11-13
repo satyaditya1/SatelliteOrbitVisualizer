@@ -26,9 +26,9 @@ st.markdown(
     """
     <p style='color:#aaa; font-size:14px; margin-top:-12px;'>
         <span style="font-weight:200;">Created by </span>
-        <span style="font-weight:600;">Satyaditya </span><span style="font-weight:900;">Akhandam</span>
+        <span style="font-weight:500;">Satyaditya </span><span style="font-weight:999;">Akhandam</span>
         <span style="font-weight:200;"> & </span>
-        <span style="font-weight:600;">Jayasheel </span><span style="font-weight:900;">Siram</span>
+        <span style="font-weight:500;">Jayasheel </span><span style="font-weight:999;">Siram</span>
     </p>
     """,
     unsafe_allow_html=True
@@ -132,4 +132,5 @@ if do_visualize:
     xs, ys, zs = propagate_kepler(sma_km, ecc, inc_deg, raan_deg, argp_deg, mean_anom_deg, mean_motion, times_seconds)
     fig = build_3d_earth_orbit(xs, ys, zs, sat_name=name)
     st.plotly_chart(fig, use_container_width=True)
+
 
