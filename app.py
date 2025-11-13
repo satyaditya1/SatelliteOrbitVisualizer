@@ -52,7 +52,7 @@ debug = st.sidebar.checkbox("Show debug info", False)
 st.sidebar.header("Visualization")
 do_visualize = st.sidebar.button("Visualize orbit (Kepler-only)")
 numdays = st.sidebar.slider("Propagate days", min_value=0.1, max_value=30.0, value=1.0, step=0.1)
-sample_seconds = st.sidebar.number_input("Sample interval (s)", min_value=10, max_value=3600, value=120, step=10)
+sample_seconds = st.sidebar.number_input("Sample interval (s)", min_value=10, max_value=3600, value=10, step=10)
 
 # If no input, show usage
 if not tle_text or tle_text.strip() == "":
@@ -130,7 +130,8 @@ if do_visualize:
     total_seconds = int(numdays * 24 * 3600)
     times_seconds = list(range(0, total_seconds+1, int(sample_seconds)))
     xs, ys, zs = propagate_kepler(sma_km, ecc, inc_deg, raan_deg, argp_deg, mean_anom_deg, mean_motion, times_seconds)
-    fig = build_3d_earth_orbit(xs, ys, zs, sat_name=name)
-    st.plotly_chart(fig, use_container_width=True)
+    
+    # Use premium Three.js visualization by default
+    build_3d_earth_orbit(xs, ys, zs, sat_name=name, premium=True)
 
 
