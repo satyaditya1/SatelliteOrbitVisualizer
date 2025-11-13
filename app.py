@@ -22,6 +22,17 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title("🛰 Satellite Orbit Visualizer")
+st.markdown(
+    """
+    <p style='color:#999; font-size:14px; margin-top:-12px;'>
+        Created by 
+        <span style="font-weight:300;">Satyaditya </span><b>Akhandam</b>
+        & 
+        <span style="font-weight:300;">Jayasheel </span><b>Siram</b>
+    </p>
+    """,
+    unsafe_allow_html=True
+)
 
 # Sidebar: Input and options
 st.sidebar.header("Input")
@@ -121,5 +132,3 @@ if do_visualize:
     xs, ys, zs = propagate_kepler(sma_km, ecc, inc_deg, raan_deg, argp_deg, mean_anom_deg, mean_motion, times_seconds)
     fig = build_3d_earth_orbit(xs, ys, zs, sat_name=name)
     st.plotly_chart(fig, use_container_width=True)
-
-st.markdown("<p style='text-align:center; color:#888;'>Created by <b>Satyaditya Akhandam</b> & <b>Jayasheel Siram</b></p>",unsafe_allow_html=True)
