@@ -121,3 +121,5 @@ if do_visualize:
     xs, ys, zs = propagate_kepler(sma_km, ecc, inc_deg, raan_deg, argp_deg, mean_anom_deg, mean_motion, times_seconds)
     fig = build_3d_earth_orbit(xs, ys, zs, sat_name=name)
     st.plotly_chart(fig, use_container_width=True)
+
+st.markdown("<p style='text-align:center; color:#888;'>Created by <b>Satyaditya Akhandam</b> & <b>Jayasheel Siram</b></p>",unsafe_allow_html=True)
